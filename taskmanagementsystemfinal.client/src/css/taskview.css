@@ -1,0 +1,130 @@
+/* Allgemeine Stile */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1E1E2F;
+    color: white;
+    border-radius: 8px;
+}
+
+h1 {
+    margin: 0;
+}
+
+#addTaskButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+    #addTaskButton:hover {
+        background-color: #0056b3;
+    }
+
+/* Tabellen-Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #1E1E2F;
+    border-radius: 8px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+th {
+    background-color: #2A2A3E;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:hover {
+    background-color: #252542;
+}
+
+/* Checkbox für "DONE" */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+/* Fortschrittsbalken */
+.progress-container {
+    width: 100px; /* Breite des Containers */
+    height: 12px; /* Höhe des Balkens */
+    background: #444; /* Hintergrundfarbe für leeren Fortschritt */
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%; /* Standardwert, wird durch JS gesetzt */
+    transition: width 0.5s ease-in-out; /* Animation */
+    border-radius: 6px;
+}
+
+/* Farben für Fortschrittsstufen */
+.progress-low {
+    background: red; /* Wenig Fortschritt = Rot */
+}
+
+.progress-medium {
+    background: yellow; /* Mittlerer Fortschritt = Gelb */
+}
+
+.progress-high {
+    background: green; /* Hoher Fortschritt = Grün */
+}
+
+/* Farbige Prioritäten */
+.priority {
+    font-weight: bold;
+}
+
+.priority-critical {
+    color: red;
+}
+
+.priority-high {
+    color: orange;
+}
+
+.priority-medium {
+    color: yellow;
+}
+
+.priority-low {
+    color: green;
+}
+
+/* Benutzer-Avatar (Platzhalter für echte Icons) */
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    display: inline-block;
+}

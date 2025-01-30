@@ -1,0 +1,234 @@
+/* === Globale Einstellungen === */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #121212; /* Dunkles Design für die Seite */
+    color: #fff;
+}
+
+/* === Dashboard-Bereich === */
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #1E1E2F;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+    header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+.btn-header {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .btn-header:hover {
+        background-color: #0056b3;
+    }
+
+/* Menü */
+nav.menu {    
+    background-color: #1E1E2F;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+    nav.menu ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+        nav.menu ul li {
+            display: inline;
+        }
+
+            nav.menu ul li a {
+                display: block;
+                color: #bbb; /* Hellgrauer Text */
+                text-decoration: none;
+                padding: 14px 20px;
+                text-align: center;
+                transition: color 0.3s, background-color 0.3s;
+            }
+
+                nav.menu ul li a:hover {
+                    color: white; /* Weiße Schrift bei Hover */
+                    background-color: #333; /* Subtiler dunklerer Hintergrund bei Hover */
+                }
+
+/* Hauptinhalt */
+main {    
+    padding: 20px;
+    background-color: #121212; /* Hintergrund des Hauptinhalts */
+    color: #ddd; /* Hellgrauer Text für bessere Lesbarkeit */
+    min-height: calc(100vh - 150px); /* Höhe mit Header und Footer einkalkuliert */
+}
+
+    main section#content {
+        background: #1E1E2F; /* Dunkler Inhaltshintergrund */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        color: #fff; /* Weiße Schrift */
+        display: none;
+    }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #1E1E2F; /* Dunkler Footer */
+    color: white; /* Hellgrauer Text */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Subtiler Schatten */
+}
+
+/* === Modal-Bereich === */
+
+/* Modal */
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Halbtransparenter Hintergrund */
+    z-index: 10;
+}
+
+    .modal .login-container {
+        background-color: #1E1E2F;
+        padding: 20px 30px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+/* Tabs oben */
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+}
+
+    .tabs button {
+        flex: 1;
+        background: none;
+        border: none;
+        font-size: 1rem;
+        padding: 10px 0;
+        color: #888;
+        cursor: pointer;
+        text-align: center;
+        transition: color 0.3s, border-color 0.3s;
+        border-bottom: 2px solid transparent;
+    }
+
+        .tabs button.active-tab {
+            color: #fff;
+            border-color: #007bff;
+        }
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Formularbereich */
+.form-section {
+    display: none; /* Standardmäßig verstecken */
+    margin-top: 20px;
+}
+
+    .form-section.active-section {
+        display: block; /* Aktivieren, wenn aktiv */
+    }
+
+/* Formularfelder */
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        color: #bbb;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        background-color: #2a2a3e;
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+    }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+        }
+
+/* Passwortfeld mit Icon */
+.password-wrapper {
+    position: relative;
+}
+
+    .password-wrapper .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #bbb;
+    }
+
+/* Buttons */
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }

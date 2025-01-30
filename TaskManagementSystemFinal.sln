@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagementSystemFinal.Server", "TaskManagementSystemFinal.Server\TaskManagementSystemFinal.Server.csproj", "{417433DE-7E10-4DB0-A5A0-2614F75785BD}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "taskmanagementsystemfinal.client", "taskmanagementsystemfinal.client\taskmanagementsystemfinal.client.esproj", "{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{417433DE-7E10-4DB0-A5A0-2614F75785BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417433DE-7E10-4DB0-A5A0-2614F75785BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417433DE-7E10-4DB0-A5A0-2614F75785BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417433DE-7E10-4DB0-A5A0-2614F75785BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC01670E-ABAC-4E80-B31A-91B3FDEA734F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

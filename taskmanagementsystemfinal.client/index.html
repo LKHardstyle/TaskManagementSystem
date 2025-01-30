@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <title>Project Management Dashboard</title>
+    <link rel="stylesheet" href="src/css/index.css">    
+</head>
+<body>
+    <header>
+        <h1>Project Management Dashboard</h1>
+        <button id="loginButton" class="btn-header">Log In</button>
+    </header>
+    <nav id="headermenu" class="menu">
+        <ul>
+            <li><a href="#" id="userManagement">Benutzerverwaltung</a></li>
+            <li><a href="#" id="taskManagement">Aufgabenverwaltung</a></li>
+            <li><a href="#" id="teamChat">Team-Chat</a></li>                        
+        </ul>
+    </nav>
+    <main>
+        <section id="content">
+            <p>Wählen Sie eine Funktion aus dem Menü aus, um zu starten.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Project Management System</p>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="login-container">
+            <div class="tabs">
+                <button id="loginTab" class="active-tab">Log In</button>
+                <button id="signupTab">Sign Up</button>
+                <span id="closeModal" class="close-btn">&times;</span>
+            </div>
+            <div id="loginForm" class="form-section active-section">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your Username..." required>
+                    <span class="error" id="usernameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password <a href="#" class="forgot-link">Forgot password?</a></label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Enter your password..." required>
+                        <span class="error" id="passwordError"></span>
+                        <span class="toggle-password">&#x1F441;</span>
+                    </div>
+                </div>
+                <button id="login" type="button" class="btn-primary">Log In</button>
+            </div>
+            <div id="signupForm" class="form-section">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" placeholder="Enter your Username..." required>
+                    <span class="error" id="usernameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Enter your password..." required>
+                    <span class="error" id="passwordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email address..." required>
+                    <span class="error" id="emailError"></span>
+                </div>
+                <button id="register" type="button" class="btn-primary">Sign Up</button>
+            </div>
+        </div>
+        <script src="src/js/Login.js"></script>
+        <script src="src/js/Register.js"></script>
+    </div>
+
+    <script src="src/js/Index.js"></script>
+    
+</body>
+</html>
