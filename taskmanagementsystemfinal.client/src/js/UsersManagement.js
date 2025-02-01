@@ -41,6 +41,7 @@ async function getUserById(id) {
             <h2>Mein Profil</h2>
             <p><strong>Benutzername:</strong> <span id="username">${user.username}</span></p>
             <p><strong>Email:</strong> <span id="email">${user.email}</span></p>
+            <p><strong>Passwort:</strong> <span id="password">********</span></p>
             <p><strong>Erstellt am:</strong> ${formatDateGerman(user.createdAt)}</p>
             <p><strong>Geändert am:</strong> <span id="updatedAt">${formatDateGerman(user.updatedAt)}</span></p>
             <button type="button" id="editProfile">Bearbeiten</button>
@@ -69,6 +70,12 @@ async function getUserById(id) {
 function enableEditMode(user) {
     document.getElementById("username").innerHTML = `<input type="text" id="usernameInput" value="${user.username}">`;
     document.getElementById("email").innerHTML = `<input type="email" id="emailInput" value="${user.email}">`;
+
+    // Passwort ändern (Neues Eingabefeld hinzufügen)
+    document.getElementById("password").innerHTML = `
+        <input type="password" id="newPasswordInput" placeholder="Neues Passwort (optional)">
+    `;
+
 
     document.getElementById("editProfile").style.display = "none";
     document.getElementById("saveChanges").style.display = "inline-block";
@@ -168,44 +175,40 @@ async function resetUserPassword(userId) {
         alert("Fehler beim Zurücksetzen des Passworts.");
     }
 }
-
-// **Funktion zum Aktualisieren der Benutzerdaten**
+// **API-Aufruf zum Aktualisieren des Users & Passworts**
 async function updateUser(id) {
     const username = document.getElementById("usernameInput").value.trim();
     const email = document.getElementById("emailInput").value.trim();
+    const newPassword = document.getElementById("newPasswordInput").value.trim();
 
     if (!username || !email) {
-        alert("Bitte alle Felder ausfüllen.");
+        alert("Benutzername und E-Mail dürfen nicht leer sein.");
         return;
     }
 
-    const updatedAt = new Date().toISOString();
+    const updatedUser = { username, email };
+
+    // Nur das Passwort senden, wenn es geändert wurde
+    if (newPassword) {
+        updatedUser.newPassword = newPassword;
+    }
 
     try {
         const response = await fetch(`https://localhost:7003/api/Users/update/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                username,
-                email,
-                updatedAt
-            })
+            body: JSON.stringify(updatedUser)
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP-Error: ${response.status}`);
+            throw new Error("Fehler beim Speichern der Änderungen.");
         }
 
-        alert("Änderungen erfolgreich gespeichert.");
-        document.getElementById("username").textContent = username;
-        document.getElementById("email").textContent = email;
-        document.getElementById("updatedAt").textContent = formatDateGerman(updatedAt);
-
-        document.getElementById("editProfile").style.display = "inline-block";
-        document.getElementById("saveChanges").style.display = "none";
+        alert("Profil erfolgreich aktualisiert!");
+        getUserById(id); // Benutzer-Daten neu laden
 
     } catch (error) {
-        console.error("Fehler beim Speichern:", error);
-        alert("Fehler beim Speichern der Änderungen.");
+        console.error("Fehler:", error);
+        alert("Fehler beim Aktualisieren des Profils.");
     }
 }

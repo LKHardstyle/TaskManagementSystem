@@ -30,6 +30,7 @@
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="login-container">
+            <script src="src/js/modal.js"></script>
             <div class="tabs">
                 <button id="loginTab" class="active-tab">Log In</button>
                 <button id="signupTab">Sign Up</button>
@@ -48,6 +49,14 @@
                         <span class="error" id="passwordError"></span>
                         <span class="toggle-password">&#x1F441;</span>
                     </div>
+                </div>
+                <div id="forgotPasswordContainer" class="hidden">
+                    <div class="form-group">
+                        <label for="forgotEmail">E-Mail-Adresse</label>
+                        <input type="email" id="forgotEmail" placeholder="Enter your E-Mail...">
+                    </div>
+                    <button id="resetPasswordBtn" class="btn-primary">Reset Password</button>
+                    <p id="forgotPasswordMessage"></p>
                 </div>
                 <button id="login" type="button" class="btn-primary">Log In</button>
             </div>

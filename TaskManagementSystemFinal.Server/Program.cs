@@ -19,6 +19,8 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader());
 });
 
+// **Konfiguration aus `appsettings.json` laden**
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
 var app = builder.Build();
 

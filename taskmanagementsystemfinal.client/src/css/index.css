@@ -123,6 +123,9 @@ footer {
         color: white;
         font-family: Arial, sans-serif;
     }
+.hidden {
+    display: none;
+}
 
 /* Tabs oben */
 .tabs {

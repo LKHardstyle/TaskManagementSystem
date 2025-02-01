@@ -14,9 +14,11 @@ namespace TaskManagementSystemFinal.Server.Controllers
     {
         private readonly AppDbContext _context;
 
+        private readonly PasswordHasher<User> _passwordHasher;
         public UsersController(AppDbContext context)
         {
             _context = context;
+            _passwordHasher = new PasswordHasher<User>();
         }
 
         [HttpGet("all")]
@@ -37,15 +39,16 @@ namespace TaskManagementSystemFinal.Server.Controllers
         }
 
         [HttpGet("id")]
-        public async Task<ActionResult<IEnumerable<UsersToShow>>> GetUser(int id)
+        public async Task<ActionResult<IEnumerable<User>>> GetUser(int id)
         {
             var user = await _context.Users
                 .Where(u => u.Id == id)
-                .Select(u => new UsersToShow
+                .Select(u => new User
                 {
                     Id = u.Id,
                     Username = u.Username,
                     Email = u.Email,
+                    PasswordHash = u.PasswordHash,
                     CreatedAt = u.CreatedAt,
                     UpdatedAt = u.UpdatedAt
                 })
@@ -59,22 +62,31 @@ namespace TaskManagementSystemFinal.Server.Controllers
             return Ok(user);
         }
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserToEdit updatedUser)
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserToEdit request)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
-                return NotFound("Benutzer nicht gefunden");
+                return NotFound("Benutzer nicht gefunden.");
             }
 
-            user.Username = updatedUser.Username;
-            user.Email = updatedUser.Email;
-            user.UpdatedAt = DateTime.UtcNow; // Automatische Aktualisierung
+            // Benutzername & E-Mail aktualisieren
+            user.Username = request.Username;
+            user.Email = request.Email;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            // Falls ein neues Passwort eingegeben wurde, hashen & speichern
+            if (!string.IsNullOrWhiteSpace(request.NewPassword))
+            {                
+                user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);
+            }
 
             await _context.SaveChangesAsync();
-
-            return Ok("Benutzerdaten aktualisiert");
+            return Ok("Profil aktualisiert.");
         }
+
+        
+
         [HttpPut("reset-password/{id}")]
         public async Task<IActionResult> ResetPassword(int id, [FromBody] PasswordResetRequest request)
         {
@@ -84,9 +96,8 @@ namespace TaskManagementSystemFinal.Server.Controllers
                 return NotFound("Benutzer nicht gefunden");
             }
 
-            // Passwort hashen (wie beim Registrieren)
-            var passwordHasher = new PasswordHasher<User>();
-            user.PasswordHash = passwordHasher.HashPassword(user, request.NewPassword);
+            // Passwort hashen (wie beim Registrieren)            
+            user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Server.Items;
+using TaskManagementSystemFinal.Server.Items;
 using TaskManagementSystemFinal.Server.Migrations;
 using TaskManagementSystemFinal.Server.Models;
 using TaskManagementSystemFinal.Server.Requests;
@@ -74,5 +75,6 @@ namespace TaskManagementSystem.Server.Controllers
 
             return Ok(new { message = "Benutzer erfolgreich registriert", username = newUser.Username });
         }
+        
     }
 }
