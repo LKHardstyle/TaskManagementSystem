@@ -1,3 +1,2 @@
-I wanted to try out ASP.NET with the Entity Framework.
-
-The Frontend is built on JavaScript with Html and Css
+I'm currently working on this Project to learn ASP.Net and the Entity Framework.
+I'm also aiming to learn JavaScript and Html/Css for Frontend Development during this.
