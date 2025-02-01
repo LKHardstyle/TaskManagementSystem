@@ -59,7 +59,7 @@ tr:hover {
     background-color: #252542;
 }
 
-/* Checkbox für "DONE" */
+/* Checkbox fÃ¼r "DONE" */
 input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -68,8 +68,8 @@ input[type="checkbox"] {
 /* Fortschrittsbalken */
 .progress-container {
     width: 100px; /* Breite des Containers */
-    height: 12px; /* Höhe des Balkens */
-    background: #444; /* Hintergrundfarbe für leeren Fortschritt */
+    height: 12px; /* HÃ¶he des Balkens */
+    background: #444; /* Hintergrundfarbe fÃ¼r leeren Fortschritt */
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -82,7 +82,7 @@ input[type="checkbox"] {
     border-radius: 6px;
 }
 
-/* Farben für Fortschrittsstufen */
+/* Farben fÃ¼r Fortschrittsstufen */
 .progress-low {
     background: red; /* Wenig Fortschritt = Rot */
 }
@@ -92,10 +92,10 @@ input[type="checkbox"] {
 }
 
 .progress-high {
-    background: green; /* Hoher Fortschritt = Grün */
+    background: green; /* Hoher Fortschritt = GrÃ¼n */
 }
 
-/* Farbige Prioritäten */
+/* Farbige PrioritÃ¤ten */
 .priority {
     font-weight: bold;
 }
@@ -116,7 +116,7 @@ input[type="checkbox"] {
     color: green;
 }
 
-/* Benutzer-Avatar (Platzhalter für echte Icons) */
+/* Benutzer-Avatar (Platzhalter fÃ¼r echte Icons) */
 .user-avatar {
     width: 30px;
     height: 30px;
