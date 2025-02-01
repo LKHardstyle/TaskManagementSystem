@@ -70,13 +70,44 @@ document.getElementById("login").addEventListener("click", async function (event
 function updatePageForLoggedInUser() {    
     const loginbutton = document.getElementById("loginButton");
     const contentarea = document.getElementById("content");
+    const header = document.querySelector("header");
 
+
+    // Login-Button ausblenden
     loginbutton.style.display = "none";
     contentarea.style.display = "block";
 
+    // Prüfen, ob Logout-Button bereits existiert
+    let logoutButton = document.getElementById("logoutButton");
+    if (!logoutButton) {
+        // Neuen Logout-Button erstellen
+        logoutButton = document.createElement("button");
+        logoutButton.id = "logoutButton";
+        logoutButton.className = "btn-header";
+        logoutButton.textContent = "Log Out";
+        logoutButton.addEventListener("click", logoutUser);
+        header.appendChild(logoutButton); // Logout-Button in die Header-Leiste einfügen
+    }
+
+    // Dashboard-Skript laden   
     loadscript("src/js/Dashboard.js");    
 }
+// **Logout-Funktion**
+function logoutUser() {
+    // Sitzung zurücksetzen (z.B. SessionStorage oder LocalStorage leeren)
+    sessionStorage.removeItem("UserId");
+    sessionStorage.removeItem("loggedIn");
 
+    // Login- und Logout-Buttons umschalten
+    document.getElementById("logoutButton").remove();
+    document.getElementById("loginButton").style.display = "inline-block";
+
+    // Inhalt zurücksetzen
+    document.getElementById("content").style.display = "none";
+
+    window.location.href = "index.html";
+    
+}
 function loadscript(scriptUrl) {
     const script = document.createElement("script");
     script.src = scriptUrl;
