@@ -15,19 +15,9 @@ async function loadTasks() {
     }
 }
 
-function loadTaskViewCSS() {
-    if (!document.querySelector("link[href='src/css/taskview.css']")) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = "src/css/taskview.css";
-        document.head.appendChild(link);
-        console.log("taskview.css wurde geladen.");
-    }
-}
-
 // Aufgabenübersicht in <section id="content"> rendern
 function renderTasks(tasks) {
-    loadTaskViewCSS();
+    
     const contentSection = document.getElementById("content");
     contentSection.innerHTML = ""; // Inhalt leeren
 

@@ -1,5 +1,5 @@
-﻿//Hilsfunktion zum Formatieren von ISO-Daten in dd.MM.yyyy
-function formateDateGerman(dateString) {
+﻿// Hilfsfunktion zum Formatieren von ISO-Daten in dd.MM.yyyy
+function formatDateGerman(dateString) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -8,117 +8,204 @@ function formateDateGerman(dateString) {
     return `${day}.${month}.${year}`;
 }
 
-// Wir verwenden eine IIFE (Immediately Invoked Function Expression),
-// sodass der Code direkt beim Laden der Datei ausgeführt wird.
-(async function loadUsers() {    
-    const UserId = sessionStorage.getItem("UserId");
-    
-    if (UserId != 1) {
-        getUserById(UserId);
-    }    
-    else {
+// IIFE: Code wird direkt nach Laden der Datei ausgeführt
+(async function loadUsers() {
+    const userId = sessionStorage.getItem("UserId");
+
+    if (userId != 1) {
+        getUserById(userId);
+    } else {
         getUsers();
-    }    
+    }
 })();
 
-
-//Funktion für alle User außer Admin
+// **Funktion für einzelne User (User kann seine Daten bearbeiten)**
 async function getUserById(id) {
-    // Referenz auf das Inhalts-Element holen
     const contentSection = document.getElementById("content");
-    // Optional: Inhalt zunächst leeren oder "Lade..."-Status anzeigen
     contentSection.innerHTML = "<p>Lade Benutzerdaten...</p>";
+
     try {
-        // API-Aufruf per async/await
-        const response = await fetch(`https://localhost:7003/api/UsersToShow/id?id=${id}`);
+        const response = await fetch(`https://localhost:7003/api/Users/id?id=${id}`);
 
         if (!response.ok) {
             throw new Error(`HTTP-Error: ${response.status}`);
         }
 
-        // JSON-Daten parsen
         const user = await response.json();
+        contentSection.innerHTML = ""; // Inhalt leeren
 
-        // Inhalt leeren
-        contentSection.innerHTML = "";
+        const userContainer = document.createElement("div");
+        userContainer.className = "user-container";
 
-        // Überschrift
-        const heading = document.createElement("h2");
-        heading.textContent = "Benutzerübersicht";
-        contentSection.appendChild(heading);
+        userContainer.innerHTML = `
+            <h2>Mein Profil</h2>
+            <p><strong>Benutzername:</strong> <span id="username">${user.username}</span></p>
+            <p><strong>Email:</strong> <span id="email">${user.email}</span></p>
+            <p><strong>Erstellt am:</strong> ${formatDateGerman(user.createdAt)}</p>
+            <p><strong>Geändert am:</strong> <span id="updatedAt">${formatDateGerman(user.updatedAt)}</span></p>
+            <button type="button" id="editProfile">Bearbeiten</button>
+            <button type="button" id="saveChanges" style="display: none;">Speichern</button>
+        `;
 
-        // Liste oder direkt einzelne Felder ausgeben
-        const userList = document.createElement("ul");
-        const listItem = document.createElement("li");
+        contentSection.appendChild(userContainer);
 
-        const createdAtFormatted = formateDateGerman(user.createdAt);
-        const updatedAtFormatted = formateDateGerman(user.updatedAt);
+        // Event Listener für Bearbeiten-Button
+        document.getElementById("editProfile").addEventListener("click", () => {
+            enableEditMode(user);
+        });
 
-        listItem.innerHTML = `            
-            <strong>Benutzername:</strong> ${user.username}<br>
-            <strong>Email:</strong> ${user.email}<br>
-            <strong>Erstellt am:</strong> ${createdAtFormatted}<br>
-            <strong>Geändert am:</strong> ${updatedAtFormatted}<br>
-            `;
-        userList.appendChild(listItem);
+        // Event Listener für Speichern-Button
+        document.getElementById("saveChanges").addEventListener("click", async () => {
+            await updateUser(id);
+        });
 
-        contentSection.appendChild(userList);
     } catch (error) {
-        // Fehlerbehandlung
-        console.error("Fehler beim Laden der Benutzer:", error);
-        contentSection.innerHTML = `<p>Fehler beim Laden der Benutzer: ${error.message}</p>`;
+        console.error("Fehler beim Laden der Benutzerdaten:", error);
+        contentSection.innerHTML = `<p>Fehler: ${error.message}</p>`;
     }
 }
 
-//Funktion für Admin User
+// **Bearbeiten-Modus aktivieren**
+function enableEditMode(user) {
+    document.getElementById("username").innerHTML = `<input type="text" id="usernameInput" value="${user.username}">`;
+    document.getElementById("email").innerHTML = `<input type="email" id="emailInput" value="${user.email}">`;
+
+    document.getElementById("editProfile").style.display = "none";
+    document.getElementById("saveChanges").style.display = "inline-block";
+}
+
+// **Funktion für Admin: Alle Benutzer anzeigen, Passwort zurücksetzen möglich**
 async function getUsers() {
-    // Referenz auf das Inhalts-Element holen
     const contentSection = document.getElementById("content");
-    // Optional: Inhalt zunächst leeren oder "Lade..."-Status anzeigen
     contentSection.innerHTML = "<p>Lade Benutzerdaten...</p>";
+
     try {
-        // API-Aufruf per async/await
-        const response = await fetch("https://localhost:7003/api/UsersToShow/all");
+        const response = await fetch("https://localhost:7003/api/Users/all");
 
         if (!response.ok) {
             throw new Error(`HTTP-Error: ${response.status}`);
         }
 
-        // JSON-Daten parsen
         const users = await response.json();
-
-        // Inhalt leeren, bevor die Liste erzeugt wird
         contentSection.innerHTML = "";
 
-        // Überschrift einfügen
         const heading = document.createElement("h2");
-        heading.textContent = "Benutzerübersicht";
+        heading.textContent = "Benutzerübersicht (Admin)";
         contentSection.appendChild(heading);
 
-        // Liste erstellen
-        const userList = document.createElement("ul");
+        const table = document.createElement("table");
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Benutzername</th>
+                    <th>Email</th>                    
+                    <th>Erstellt am</th>
+                    <th>Geändert am</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        `;
 
-        // Jeden Benutzer in der Liste anzeigen
+        const tbody = table.querySelector("tbody");
+
         users.forEach(user => {
-            const listItem = document.createElement("li");
+            const row = document.createElement("tr");
 
-            const createdAtFormatted = formateDateGerman(user.createdAt);
-            const updatedAtFormatted = formateDateGerman(user.updatedAt);
-
-            listItem.innerHTML = `
-            <strong>Benutzername:</strong> ${user.username}<br>
-            <strong>Email:</strong> ${user.email}<br>
-            <strong>Erstellt am:</strong> ${createdAtFormatted}<br>
-            <strong>Geändert am:</strong> ${updatedAtFormatted}<br><br>
+            row.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.username}</td>
+                <td>${user.email}</td>                
+                <td>${formatDateGerman(user.createdAt)}</td>
+                <td id="updatedAt-${user.id}">${formatDateGerman(user.updatedAt)}</td>
+                <td>
+                    <button class="reset-password" data-userid="${user.id}">🔄 Passwort Zurücksetzen</button>
+                </td>
             `;
-            userList.appendChild(listItem);
+
+            tbody.appendChild(row);
         });
 
-        contentSection.appendChild(userList);
+        contentSection.appendChild(table);        
+
+        // Event Listener für Passwort-Zurücksetzen-Button
+        document.querySelectorAll(".reset-password").forEach(button => {
+            button.addEventListener("click", async (event) => {
+                const userId = event.target.dataset.userid;
+                const confirmReset = confirm(`Soll das Passwort für Benutzer-ID ${userId} wirklich zurückgesetzt werden?`);
+                if (confirmReset) {
+                    await resetUserPassword(userId);
+                }
+            });
+        });
 
     } catch (error) {
-        // Fehlerbehandlung
         console.error("Fehler beim Laden der Benutzer:", error);
-        contentSection.innerHTML = `<p>Fehler beim Laden der Benutzer: ${error.message}</p>`;
+        contentSection.innerHTML = `<p>Fehler: ${error.message}</p>`;
+    }
+}
+
+// **API-Aufruf zum Zurücksetzen des Passworts**
+async function resetUserPassword(userId) {
+    try {
+        const response = await fetch(`https://localhost:7003/api/Users/reset-password/${userId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ newPassword: "Reset123!" })
+        });
+
+        if (!response.ok) {
+            throw new Error("Fehler beim Zurücksetzen des Passworts.");
+        }
+
+        alert(`Passwort für Benutzer-ID ${userId} wurde erfolgreich zurückgesetzt.`);
+        document.getElementById(`password-${userId}`).textContent = "******"; // Sicherstellen, dass das Passwort verborgen bleibt
+        document.getElementById(`updatedAt-${userId}`).textContent = formatDateGerman(new Date().toISOString());
+
+    } catch (error) {
+        console.error("Fehler:", error);
+        alert("Fehler beim Zurücksetzen des Passworts.");
+    }
+}
+
+// **Funktion zum Aktualisieren der Benutzerdaten**
+async function updateUser(id) {
+    const username = document.getElementById("usernameInput").value.trim();
+    const email = document.getElementById("emailInput").value.trim();
+
+    if (!username || !email) {
+        alert("Bitte alle Felder ausfüllen.");
+        return;
+    }
+
+    const updatedAt = new Date().toISOString();
+
+    try {
+        const response = await fetch(`https://localhost:7003/api/Users/update/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username,
+                email,
+                updatedAt
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP-Error: ${response.status}`);
+        }
+
+        alert("Änderungen erfolgreich gespeichert.");
+        document.getElementById("username").textContent = username;
+        document.getElementById("email").textContent = email;
+        document.getElementById("updatedAt").textContent = formatDateGerman(updatedAt);
+
+        document.getElementById("editProfile").style.display = "inline-block";
+        document.getElementById("saveChanges").style.display = "none";
+
+    } catch (error) {
+        console.error("Fehler beim Speichern:", error);
+        alert("Fehler beim Speichern der Änderungen.");
     }
 }
