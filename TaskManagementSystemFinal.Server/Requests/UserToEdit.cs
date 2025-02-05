@@ -1,4 +1,4 @@
-﻿namespace TaskManagementSystemFinal.Server.Items
+﻿namespace TaskManagementSystemFinal.Server.Requests
 {
     // **DTO für Benutzer-Aktualisierung**
     public class UserToEdit

@@ -1,0 +1,152 @@
+/* === Linke Spalte (Suchleiste + Chatliste) === */
+.chat-container {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #121212;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+/* Stellt sicher, dass die linke Spalte vertikal ausgerichtet ist */
+.chat-list-container {
+    display: flex;
+    flex-direction: column; /* Stapelt Elemente untereinander */
+    width: 30%;
+    height: 100%;
+    background-color: #1e1e2f;
+    border-right: 1px solid #2a2a3e;
+}
+/* Die Chat-Liste kommt direkt unter die Suchleiste */
+.chat-list {
+    flex-grow: 1; /* Füllt den verbleibenden Platz */
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #2a2a3e;
+    transition: background 0.3s;
+}
+
+    .chat-item:hover {
+        background-color: #2a2a3e;
+    }
+
+.chat-name {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Die Suchleiste bleibt oben */
+.search-bar {
+    padding: 10px;
+    width: 30%;
+    background-color: #1e1e2f;
+    border-bottom: 1px solid #2a2a3e;
+}
+
+    .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #2a2a3e;
+        color: white;
+    }
+
+        .search-bar input::placeholder {
+            color: #bbb;
+        }
+
+/* === Rechte Spalte (Nachrichtenfenster) === */
+.chat-window {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #0d0d0d;
+}
+
+/* === Nachrichtenübersicht === */
+.messages-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === Nachrichtenelemente === */
+.message-sent,
+.message-received {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+/* Gesendete Nachrichten */
+.message-sent {
+    align-self: flex-end;
+    background-color: #0084ff;
+    color: white;
+    text-align: right;
+}
+
+/* Empfangene Nachrichten */
+.message-received {
+    align-self: flex-start;
+    background-color: #2a2a3e;
+    color: white;
+}
+.message-read {
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* === Nachrichteneingabe === */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background-color: #1e1e2f;
+    border-top: 1px solid #2a2a3e;
+}
+
+    .chat-input input {
+        flex-grow: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #2a2a3e;
+        color: white;
+    }
+
+        .chat-input input::placeholder {
+            color: #bbb;
+        }
+
+    .chat-input button {
+        margin-left: 10px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #0084ff;
+        color: white;
+        cursor: pointer;
+    }
+
+        .chat-input button:hover {
+            background-color: #006dd6;
+        }
+
+/* === Ausgeblendetes Chat-Fenster === */
+.hidden {
+    display: none;
+}
