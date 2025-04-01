@@ -18,6 +18,11 @@ teamChat.addEventListener("click", () => {
 });
 
 function loadscript(scriptUrl) {
+    //Falls es sich um Chat.js handelt, einen cache busting parameter anhängen
+    if (scriptUrl.includes("Chat.js")) {
+        scriptUrl += "?t=" + new Date().getTime();
+    }
+
     // Falls das Skript schon existiert, lösche es vorher
     const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
     if (existingScript) {
